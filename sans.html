@@ -4,6 +4,47 @@
   <meta charset="UTF-8" />
   <title>Headphone Store</title>
   <style>
+    /* Developer List Popup Styles */
+    .developer-list {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      margin: 40px 0 30px 0;
+    }
+    .dev-item {
+      position: relative;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #003366;
+      background: #f7faff;
+      padding: 18px 28px;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+    .dev-item:hover {
+      box-shadow: 0 8px 32px rgba(0,198,255,0.18);
+      background: #e6f7ff;
+    }
+    .dev-item img {
+      position: absolute;
+      left: 110%;
+      top: 50%;
+      transform: translateY(-50%) scale(0.8);
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,198,255,0.18);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 10;
+    }
+    .dev-item:hover img {
+      opacity: 1;
+      transform: translateY(-50%) scale(1);
+    }
     * {
       box-sizing: border-box;
     }
@@ -14,7 +55,6 @@
       background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
     }
 
-    /* Top Taskbar */
     .taskbar {
       position: sticky;
       top: 0;
@@ -43,7 +83,6 @@
       padding: 5px;
     }
 
-    /* Dropdown styling */
     .dropdown {
       position: relative;
       display: inline-block;
@@ -81,90 +120,130 @@
       background-color: #0059b3;
     }
 
-     /* Hero section */
     .hero {
-      background-color: #003366;
-      color: white;
-      padding: 50px 20px;
+      position: relative;
+      background: linear-gradient(135deg, #003366 60%, #00c6ff 100%);
+      color: #fff;
+      padding: 60px 20px 70px 20px;
       text-align: center;
+      overflow: hidden;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      border-radius: 0 0 40px 40px;
+    }
+
+    /* Ripple effect for hero */
+    .hero .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple-hero 0.7s linear;
+      background: rgba(255,255,255,0.4);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes ripple-hero {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+      background: linear-gradient(90deg, #abe4efe0 60%, #00c6ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 2px 8px #00c6ff88);
+      cursor: pointer;
+      transition: filter 0.2s;
+    }
+
+    .hero h1:hover {
+      filter: drop-shadow(0 4px 16px #00c6ffcc);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      margin-top: 0;
+      margin-bottom: 0;
+      color: #e0eaff;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #00336655;
     }
 
     #hoverText {
-      font-size: 1.5rem;
-      transition: transform 0.2s ease, color 0.1s ease;
+      font-size: 2.5rem;
+      color: rgb(255, 254, 254);
+      transition: all 0.2s ease;
       cursor: pointer;
     }
 
-    .animate {
+    .glow {
+      text-shadow: 0 0 5px #efeaf0,
+                   0 0 10px #efeaf0,
+                   0 0 20px #efeaf0,
+                   0 0 30px #c2bcf0;
+      color: #efeaf0;
       transform: scale(1.3);
-      color: #fefefe;
     }
 
-    /* Developer List Section */
-    .developer-list {
-      margin: 50px auto 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
+    .carousel-wrapper {
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 30px 0;
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
     }
 
-    .dev-item {
-      position: relative;
-      background-color: #0077ff;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 18px;
-      transition: background-color 0.3s;
-      width: 200px;
-      text-align: center;
-    }
-
-    .dev-item:hover {
-      background-color: #005fcc;
-    }
-
-    .dev-item img {
-      display: none;
-      margin-top: 10px;
-      width: 100%;
-      border-radius: 10px;
-      border: 2px solid #333;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .dev-item:hover img {
-      display: block;
-    }
-
-    /* Featured Products Section */
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      padding: 40px 20px;
+    .carousel-track {
+      display: inline-block;
+      animation: scroll 20s linear infinite;
     }
 
     .product-card {
+      display: inline-block;
+      vertical-align: top;
       background-color: white;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       width: 220px;
       padding: 20px;
       text-align: center;
-      transition: transform 0.3s;
+      margin: 0 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
     }
 
     .product-card:hover {
-      transform: translateY(-8px);
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+
+    .product-card .external-link-icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 6px;
+      font-size: 1.1em;
+      color: #00c6ff;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .product-card:hover .external-link-icon {
+      opacity: 1;
+      color: #e91e63;
     }
 
     .product-card img {
-      width: 100%;
+      width: 160px;
+      height: 160px;
       border-radius: 10px;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 10px auto;
     }
 
     .product-card h3 {
@@ -176,8 +255,35 @@
       font-size: 14px;
       color: #444;
     }
+    .product-card,
+    .product-card:link,
+    .product-card:visited {
+      display: inline-block;
+      vertical-align: top;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 220px;
+      padding: 20px;
+      text-align: center;
+      margin: 0 15px;
+      transition: transform 0.3s;
+      color: inherit;
+      text-decoration: none;
+    }
+    .product-card:hover {
+      transform: scale(1.05);
+    }
 
-    /* Footer */
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .carousel-wrapper:hover .carousel-track {
+      animation-play-state: paused;
+    }
+
     footer {
       background-color: #003366;
       color: white;
@@ -189,13 +295,11 @@
 </head>
 <body>
 
-  <!-- Taskbar -->
   <div class="taskbar">
     <div>🎧 HeadZone</div>
     <nav>
       <a href="#">Home</a>
       <a href="#">Products</a>
-
       <div class="dropdown">
         <a href="#">Support</a>
         <div class="dropdown-content">
@@ -205,7 +309,6 @@
           <a href="#">Launch a Request/Complain</a>
         </div>
       </div>
-
       <div class="dropdown">
         <a href="#">Contact</a>
         <div class="dropdown-content">
@@ -216,64 +319,111 @@
     </nav>
   </div>
 
-  <!-- Hero Section -->
   <div class="hero">
-    <h1 id="hoverText" onmouseover="addEffect()" onmouseout="removeEffect()">Feel the Sound</h1>
-    <p>Experience premium audio quality with our latest headphones.</p>
-  </div>
-
-  <!-- Product Cards -->
-  <div class="products">
-    <div class="product-card">
-      <img src="product1.jpg" alt="Headphone 1" />
-      <h3>ProBass X1</h3>
-      <p>Deep bass & clear treble</p>
-    </div>
-    <div class="product-card">
-      <img src="product2.jpg" alt="Headphone 2" />
-      <h3>Studio HD</h3>
-      <p>Built for studio professionals</p>
-    </div>
-    <div class="product-card">
-      <img src="product3.jpg" alt="Headphone 3" />
-      <h3>NoiseBlocker 360</h3>
-      <p>Active noise cancellation</p>
+    <div id="heroRippleContainer" class="hero-ripple-container">
+      <h1 id="hoverText" onmouseover="addGlow()" onmouseout="removeGlow()">Feel the Sound</h1>
+      <p>Experience premium audio quality with our latest headphones.</p>
     </div>
   </div>
 
+  <!-- Scrolling Carousel -->
+  <div class="carousel-wrapper">
+    <div class="carousel-track">
+      <a href="hdphn1.html" class="product-card" aria-label="View details for ProBass X1">
+        <img src="assets/headphone1.png" alt="Headphone 1">
+        <h3>ProBass X1 <span class="external-link-icon" title="Opens product detail page">&#8599;</span></h3>
+        <p>Deep bass & clear treble</p>
+      </a>
+      <a href="hdphn1.html" class="product-card" aria-label="View details for Studio HD">
+        <img src="assets/hdphn2.jpg" alt="Headphone 2">
+        <h3>Studio HD <span class="external-link-icon" title="Opens product detail page">&#8599;</span></h3>
+        <p>Built for studio professionals</p>
+      </a>
+      <a href="hdphn1.html" class="product-card" aria-label="View details for NoiseBlocker 360">
+        <img src="assets/hdphn3.jpg" alt="Headphone 3">
+        <h3>NoiseBlocker 360 <span class="external-link-icon" title="Opens product detail page">&#8599;</span></h3>
+        <p>Active noise cancellation</p>
+      </a>
+      <a href="hdphn1.html" class="product-card" aria-label="View details for ThunderBeat">
+        <img src="assets/hdphn4.jpg" alt="Headphone 4">
+        <h3>ThunderBeat <span class="external-link-icon" title="Opens product detail page">&#8599;</span></h3>
+        <p>Long battery life</p>
+      </a>
+      <a href="hdphn1.html" class="product-card" aria-label="View details for BassMaster">
+        <img src="assets/hdphn5.jpg" alt="Headphone 5">
+        <h3>BassMaster <span class="external-link-icon" title="Opens product detail page">&#8599;</span></h3>
+        <p>Rich bass and clarity</p>
+      </a>
+      <!-- Repeat cards for seamless loop -->
+      <a href="hdphn1.html" class="product-card" aria-label="View details for ProBass X1">
+        <img src="assets/hdph1.jpeg" alt="Headphone 1">
+        <h3>ProBass X1 <span class="external-link-icon" title="Opens product detail page">&#8599;</span></h3>
+        <p>Deep bass & clear treble</p>
+      </a>
+      <a href="hdphn1.html" class="product-card" aria-label="View details for Studio HD">
+        <img src="assets/hdphn3.jpg" alt="Headphone 2">
+        <h3>Studio HD <span class="external-link-icon" title="Opens product detail page">&#8599;</span></h3>
+        <p>Built for studio professionals</p>
+      </a>
+    </div>
+  </div>
   <!-- Developer List with Hover Popups -->
   <div class="developer-list">
     <div class="dev-item">
-      Developer 1
+      Mr. Max Verstapenn
       <img src="https://static.vecteezy.com/system/resources/previews/026/794/674/original/confident-young-businessman-in-suit-standing-free-photo.jpg" alt="Dev 1" />
     </div>
     <div class="dev-item">
-      Developer 2
+      Ms. Kate Middleton
       <img src="https://i.pinimg.com/736x/2a/7d/4c/2a7d4c4bc1381a476b8b8a85885ac392.jpg" alt="Dev 2" />
     </div>
     <div class="dev-item">
-      Developer 3
+      Ms. Larisa Warne
       <img src="https://imgcdn.stablediffusionweb.com/2024/11/6/8708a5a1-2092-49ef-bb2b-d8c9567f3595.jpg" alt="Dev 3" />
     </div>
     <div class="dev-item">
-      Developer 4
+      Mr. David Robinson
       <img src="https://tse3.mm.bing.net/th/id/OIP.oDPGq31VbxVemW3ZzciSUAHaHa?w=626&h=626&rs=1&pid=ImgDetMain&o=7&rm=3.jpg" alt="Dev 4" />
     </div>
   </div>
 
-  <!-- Footer -->
   <footer>
     &copy; 2025 HeadZone Audio. All rights reserved. | Contact: support@headzone.com
   </footer>
+
   <script>
-    function addEffect() {
-      document.getElementById("hoverText").classList.add("animate");
+    function addGlow() {
+      document.getElementById("hoverText").classList.add("glow");
     }
 
-    function removeEffect() {
-      document.getElementById("hoverText").classList.remove("animate");
+    function removeGlow() {
+      document.getElementById("hoverText").classList.remove("glow");
     }
+
+    // Ripple effect for hero section on mousemove
+    function createHeroRipple(e) {
+      const hero = document.querySelector('.hero');
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const rect = hero.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      ripple.style.left = `${x - 20}px`;
+      ripple.style.top = `${y - 20}px`;
+      ripple.style.width = ripple.style.height = '50px';
+      hero.appendChild(ripple);
+      ripple.addEventListener('animationend', () => {
+        ripple.remove();
+      });
+    }
+
+    // Add mousemove event to hero for ripple effect
+    document.addEventListener('DOMContentLoaded', function() {
+      const hero = document.querySelector('.hero');
+      hero.addEventListener('mousemove', createHeroRipple);
+    });
   </script>
 
 </body>
 </html>
+new
